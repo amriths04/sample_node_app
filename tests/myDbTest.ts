@@ -43,4 +43,4 @@ function insertSql(firstName:string,lastname:string) {
 
 // selectSql("Roo' OR'1=1");
 selectSql("Root");
-insertSql("hi","name");
+//insertSql("hi","name");
