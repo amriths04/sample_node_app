@@ -11,7 +11,7 @@ const myDbAccess =new MyDatabaseAccess();
 //     myDbAccess.close();
 // }
 
-function selectSql(firstName:string) {
+function selectFirstName(firstName:string) {
     try {
     // const sql="Select * from user where firstname='"+firstName+"'"
     const params =[firstName];
@@ -19,12 +19,28 @@ function selectSql(firstName:string) {
     console.log(sql)
     const rows=myDbAccess.runSql(sql, params);
     console.log(rows);
-} catch (error) {
-    console.log(error);
-}finally{
+    } catch (error) {
+        console.log(error);
+    }/*finally{
+        myDbAccess.close();
+    }*/
+}
+
+function selectCity(city:string){
+    try{
+        const params=[city];
+        const sql= "SELECT * FROM USER WHERE city =?"
+        console.log(sql);
+        const rows=myDbAccess.runSql(sql, params);
+        console.log(rows);
+    }catch (error) {
+        console.log(error);
+    }
+    /*finally{
     myDbAccess.close();
+    }*/
 }
-}
+
 function insertSql(firstName:string,lastname:string) {
     try {
     // const sql="Select * from user where firstname='"+firstName+"'"
@@ -36,11 +52,12 @@ function insertSql(firstName:string,lastname:string) {
     console.log(result);
 } catch (error) {
     console.log(error);
-}finally{
+}/*finally{
     myDbAccess.close();
-}
+}*/
 }
 
 // selectSql("Roo' OR'1=1");
-selectSql("Root");
-//insertSql("hi","name");
+selectFirstName("Root");
+selectCity("City");
+insertSql("hi","name");
