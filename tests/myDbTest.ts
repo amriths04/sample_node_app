@@ -41,21 +41,6 @@ function selectCity(city:string){
     myDbAccess.close();
     }*/
 }
-
-// function insertSql(firstName:string,lastname:string) {
-//     try {
-//     // const sql="Select * from user where firstname='"+firstName+"'"
-    
-//     const sql="INSERT INTO User (FirstName,LastName) values (?,?)";
-//     console.log(sql)
-//     const params =[firstName,lastname];
-//     const result=myDbAccess.runSql(sql, params);
-//     console.log(result);
-// } catch (error) {
-//     console.log(error);
-// }/*finally{
-//     myDbAccess.close();
-// }*/ }
 function insertSql(email: string, firstName: string, lastName: string, Address1: string, city: string, StateProvince: string, country: string, pincode: string, PhoneNumber: string) {
     try {
         const sql = `
@@ -71,25 +56,34 @@ function insertSql(email: string, firstName: string, lastName: string, Address1:
         
         const params = [email, firstName, lastName, Address1, city, StateProvince, country, pincode, PhoneNumber];
         
-        console.log(sql);
-        console.log("Params: ", params);
+        // console.log(sql);
+        // console.log("Params: ", params);
         
         const result = myDbAccess.execute(sql, params);
-        console.log(result);
+        // console.log(result);
     } catch (error) {
-        console.log(error);}
-    // } finally {
-    //     myDbAccess.close();
-    // }
+        console.log(error);
+    }
+    
+}
+
+function deleteAccount(PhoneNumber: string,) {
+    try {
+        const sql = ` DELETE FROM User  WHERE PhoneNumber = ?;`;
+        
+        const params=[PhoneNumber];
+        const result = myDbAccess.execute(sql, params);
+        // console.log(result);
+    } catch (error) {
+        console.log(error);
+    }
+    
 }
 
 
-insertSql("amrith@coachbuddy.ai", "Amrith", "Shet", "Tiger Circle", "Manipal", "Karnataka", "India", "000000", "9876543210");
 
-
-
-
+// insertSql("amrith@coachbuddy.ai", "Amrith", "Shet", "Tiger Circle", "Manipal", "Karnataka", "India", "000000", "9876543210");
 // selectSql("Roo' OR'1=1");
 selectFirstName("Root");
-selectCity("City");
-
+selectCity("Manipal");
+deleteAccount("9876543210");
