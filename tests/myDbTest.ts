@@ -81,6 +81,20 @@ function deleteAccount(PhoneNumber: string,) {
 }
 
 
+function updateSql(userId: string, firstName: string, lastName: string) {
+    try {
+        const sql = "UPDATE User SET FirstName = ?, LastName = ? WHERE UserId = ?";
+        const params = [firstName, lastName, userId];
+        console.log(sql);
+        const result = myDbAccess.execute(sql, params);
+        console.log(result);
+    } catch (error) {
+        console.log(error);
+    } finally {
+        myDbAccess.close();
+    }
+}
+
 
 // insertSql("amrith@coachbuddy.ai", "Amrith", "Shet", "Tiger Circle", "Manipal", "Karnataka", "India", "000000", "9876543210");
 // selectSql("Roo' OR'1=1");
