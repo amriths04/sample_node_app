@@ -41,31 +41,21 @@ function selectCity(city:string){
     myDbAccess.close();
     }*/
 }
-function insertSql(email: string, firstName: string, lastName: string, Address1: string, city: string, StateProvince: string, country: string, pincode: string, PhoneNumber: string) {
-    try {
-        const sql = `
-            INSERT INTO User (
-                UserId, Email, PwdHash, FirstName, LastName, Address1, Address2, City, 
-                StateProvince, Country, PinZipCode, PhoneNumber, CreatedAt, CreatedBy, 
-                LastModifiedAt, LastModifiedBy, OptLockVersion
-            ) VALUES (
-                '00000000-0000-0000-0000-000000000001', ?, 'root_pwd_hash', ?, ?, ?, 'Address 2', ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, 
-                '00000000-0000-0000-0000-000000000000', CURRENT_TIMESTAMP, '00000000-0000-0000-0000-000000000000', 1
-            );
-        `;
-        
-        const params = [email, firstName, lastName, Address1, city, StateProvince, country, pincode, PhoneNumber];
-        
-        // console.log(sql);
-        // console.log("Params: ", params);
-        
-        const result = myDbAccess.execute(sql, params);
-        // console.log(result);
-    } catch (error) {
-        console.log(error);
-    }
-    
+function insertSql(userId: string, email: string, firstName: string, lastName: string, address1: string, city: string, stateProvince: string, country: string, pinCode: string, phoneNumber: string) {
+    const sql = `
+        INSERT INTO User (
+            UserId, Email, PwdHash, FirstName, LastName, Address1, Address2, City, 
+            StateProvince, Country, PinZipCode, PhoneNumber, CreatedAt, CreatedBy, 
+            LastModifiedAt, LastModifiedBy, OptLockVersion
+        ) VALUES (
+            ?, ?, 'root_pwd_hash', ?, ?, ?, 'Address 2', ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, 
+            '00000000-0000-0000-0000-000000000000', CURRENT_TIMESTAMP, '00000000-0000-0000-0000-000000000000', 1
+        );
+    `;
+    const params = [userId, email, firstName, lastName, address1, city, stateProvince, country, pinCode, phoneNumber];
+    return myDbAccess.execute(sql, params);
 }
+
 
 function deleteAccount(PhoneNumber: string,) {
     try {
@@ -120,14 +110,57 @@ function updatePhoneNo(userId: string, newPhoneNumber: string) {
         console.log("Error updating phone number:", error);
     } 
 }
+function updatePhoneNoWithUserID(userId: string, newPhoneNumber: string) {
+    try {
+        const sql = "UPDATE User SET PhoneNumber = ? WHERE UserId = ?";
+        const params = [newPhoneNumber, userId];
+ 
+        const result = myDbAccess.execute(sql, params);
+       
+    } catch (error) {
+        console.log("Error encountered:", error);
+    }
+}
 
+function UserinsertUpdateSelect(userId: string, newPhoneNumber: string) {
+    try {
+        console.log("Starting transaction for insert...");
+        myDbAccess.execute("BEGIN TRANSACTION");
+        insertSql("00000000-0000-0000-0000-000000000002", "shravari@coachbuddy.ai", "Shravari", "K", "Tiger Circle", "Manipal", "Karnataka", "India", "000000", "7896321455");
+        myDbAccess.execute("COMMIT");
+        console.log("User inserted successfully.");
 
-// insertSql("amrith@coachbuddy.ai", "Amrith", "Shet", "Tiger Circle", "Manipal", "Karnataka", "India", "000000", "9876543210");
-// selectSql("Roo' OR'1=1");
-selectFirstName("Root");
-selectCity("Manipal");
-// deleteAccount("9876543210");
+        console.log("Starting transaction for update...");
+        myDbAccess.execute("BEGIN TRANSACTION");
+        updatePhoneNoWithUserID(userId, newPhoneNumber);
+        myDbAccess.execute("COMMIT");
+        console.log("User updated successfully.");
+
+        console.log("Starting transaction for select...");
+        myDbAccess.execute("BEGIN TRANSACTION");
+        selectCity("Manipal");
+        myDbAccess.execute("COMMIT");
+        console.log("User shown successfully.");
+    } catch (error) {
+        console.log("Error encountered:", error);
+        try {
+            console.log("Rolling back transaction...");
+            myDbAccess.execute("ROLLBACK");
+        } catch (rollbackError) {
+            console.log("Error rolling back transaction:", rollbackError);
+        }
+        console.log("Error during transaction:", error);
+    }
+}
+
+// Example calls
+// selectFirstName("Root");
+// selectCity("Manipal");
 const userId = '00000000-0000-0000-0000-000000000001';
-const newPhoneNumber = '1212121212';
+const newPhoneNumber = '1212121215';
 
-updatePhoneNo(userId, newPhoneNumber);
+// updatePhoneNoWithUserID(userId, newPhoneNumber);
+
+UserinsertUpdateSelect("00000000-0000-0000-0000-000000000002", "1234123455");
+
+// deleteAccount("1234123455");
