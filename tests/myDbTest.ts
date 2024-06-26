@@ -94,10 +94,40 @@ function updateSql(userId: string, firstName: string, lastName: string) {
         myDbAccess.close();
     }
 }
+function updatePhoneNo(userId: string, newPhoneNumber: string) {
+    try {
+        
+        console.log("Starting transaction...");
+        myDbAccess.execute("BEGIN TRANSACTION");
+        const updatePhoneSql = "UPDATE User SET PhoneNumber = ? WHERE UserId = ?";
+        const updatePhoneParams = [newPhoneNumber, userId];
+        console.log("Executing update:", updatePhoneSql, updatePhoneParams);
+        myDbAccess.execute(updatePhoneSql, updatePhoneParams);
+
+        myDbAccess.execute("COMMIT");
+
+        console.log("Phone number updated successfully.");
+    } catch (error) {
+        console.log("Error encountered:", error);
+
+        try {
+            console.log("Rolling back transaction...");
+            myDbAccess.execute("ROLLBACK");
+        } catch (rollbackError) {
+            console.log("Error rolling back transaction:", rollbackError);
+        }
+
+        console.log("Error updating phone number:", error);
+    } 
+}
 
 
 // insertSql("amrith@coachbuddy.ai", "Amrith", "Shet", "Tiger Circle", "Manipal", "Karnataka", "India", "000000", "9876543210");
 // selectSql("Roo' OR'1=1");
 selectFirstName("Root");
 selectCity("Manipal");
-deleteAccount("9876543210");
+// deleteAccount("9876543210");
+const userId = '00000000-0000-0000-0000-000000000001';
+const newPhoneNumber = '1212121212';
+
+updatePhoneNo(userId, newPhoneNumber);

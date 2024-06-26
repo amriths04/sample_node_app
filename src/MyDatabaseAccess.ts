@@ -23,12 +23,16 @@ export class MyDatabaseAccess{
         const rows =stmt.all(params)
         return rows;
     }
-    public execute(sql:string,params?: any) : Database.RunResult{
-        const stmt =this.connection.prepare(sql);
-        const result =stmt.run(params)
+    // public execute(sql:string,params?: any) : Database.RunResult{
+    //     const stmt =this.connection.prepare(sql);
+    //     const result =stmt.run(params)
+    //     return result;
+    // }
+    public execute(sql: string, params?: any[]): Database.RunResult {
+        const stmt = this.connection.prepare(sql);
+        const result = params ? stmt.run(params) : stmt.run();
         return result;
     }
-
 
     //close connection
     public close(){
