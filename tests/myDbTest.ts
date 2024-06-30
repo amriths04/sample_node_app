@@ -3,8 +3,7 @@ import { MyDatabaseAccess } from "../src/MyDatabaseAccess";
 import Database from "better-sqlite3";
 
 
-const myDbAccess =new MyDatabaseAccess();
-
+const myDbAccess = new MyDatabaseAccess();
 // try {
 //     myDbAccess.createTable();
 // } catch (error) {
@@ -13,14 +12,14 @@ const myDbAccess =new MyDatabaseAccess();
 //     myDbAccess.close();
 // }
 
-function selectFirstName(firstName:string) {
+function selectFirstName(firstName: string) {
     try {
-    // const sql="Select * from user where firstname='"+firstName+"'"
-    const params =[firstName];
-    const sql="Select * from user where firstname=?"
-    console.log(sql)
-    const rows=myDbAccess.runSql(sql, params);
-    console.log(rows);
+        // const sql="Select * from user where firstname='"+firstName+"'"
+        const params = [firstName];
+        const sql = "Select * from user where firstname=?"
+        console.log(sql)
+        const rows = myDbAccess.runSql(sql, params);
+        console.log(rows);
     } catch (error) {
         console.log(error);
     }/*finally{
@@ -28,14 +27,14 @@ function selectFirstName(firstName:string) {
     }*/
 }
 
-function selectCity(city:string){
-    try{
-        const params=[city];
-        const sql= "SELECT * FROM USER WHERE city =?"
+function selectCity(city: string) {
+    try {
+        const params = [city];
+        const sql = "SELECT * FROM USER WHERE city =?"
         console.log(sql);
-        const rows=myDbAccess.runSql(sql, params);
+        const rows = myDbAccess.runSql(sql, params);
         console.log(rows);
-    }catch (error) {
+    } catch (error) {
         console.log(error);
     }
 }
@@ -58,14 +57,14 @@ function insertSql(userId: string, email: string, firstName: string, lastName: s
 function deleteAccount(PhoneNumber: string,) {
     try {
         const sql = ` DELETE FROM User  WHERE PhoneNumber = ?;`;
-        
-        const params=[PhoneNumber];
+
+        const params = [PhoneNumber];
         const result = myDbAccess.execute(sql, params);
         // console.log(result);
     } catch (error) {
         console.log(error);
     }
-    
+
 }
 
 
@@ -84,7 +83,7 @@ function updateSql(userId: string, firstName: string, lastName: string) {
 }
 function updatePhoneNo(userId: string, newPhoneNumber: string) {
     try {
-        
+
         console.log("Starting transaction...");
         myDbAccess.execute("BEGIN TRANSACTION");
         const updatePhoneSql = "UPDATE User SET PhoneNumber = ? WHERE UserId = ?";
@@ -106,15 +105,15 @@ function updatePhoneNo(userId: string, newPhoneNumber: string) {
         }
 
         console.log("Error updating phone number:", error);
-    } 
+    }
 }
 function updatePhoneNoWithUserID(userId: string, newPhoneNumber: string) {
     try {
         const sql = "UPDATE User SET PhoneNumber = ? WHERE UserId = ?";
         const params = [newPhoneNumber, userId];
- 
+
         const result = myDbAccess.execute(sql, params);
-       
+
     } catch (error) {
         console.log("Error encountered:", error);
     }
@@ -151,7 +150,74 @@ function UserinsertUpdateSelect(userId: string, newPhoneNumber: string) {
     }
 }
 
-// Example calls
+
+// insertSql(
+//     '00000000-0000-0000-0000-000000000002',
+//     'sachin.tendulkar@example.com',
+//     'Sachin',
+//     'Tendulkar',
+//     'Perry Cross Rd',
+//     'Mumbai',
+//     'Maharashtra',
+//     'India',
+//     '400050',
+//     '1234567890'
+// );
+
+
+// insertSql(
+//     '00000000-0000-0000-0000-000000000003',
+//     'virat.kohli@example.com',
+//     'Virat',
+//     'Kohli',
+//     'Meera Bagh',
+//     'New Delhi',
+//     'Delhi',
+//     'India',
+//     '110087',
+//     '0987654321'
+// );
+
+
+// insertSql(
+//     '00000000-0000-0000-0000-000000000004',
+//     'mahendra.dhoni@example.com',
+//     'Mahendra',
+//     'Dhoni',
+//     'Harmu Housing Colony',
+//     'Ranchi',
+//     'Jharkhand',
+//     'India',
+//     '834002',
+//     '1122334455'
+// );
+// insertSql(
+//     '00000000-0000-0000-0000-000000000005',
+//     'rahul.dravid@example.com',
+//     'Rahul',
+//     'Dravid',
+//     'Indiranagar',
+//     'Bangalore',
+//     'Karnataka',
+//     'India',
+//     '560038',
+//     '2233445566'
+// );
+
+
+// insertSql(
+//     '00000000-0000-0000-0000-000000000006',
+//     'sourav.ganguly@example.com',
+//     'Sourav',
+//     'Ganguly',
+//     'Behala',
+//     'Kolkata',
+//     'West Bengal',
+//     'India',
+//     '700034',
+//     '3344556677'
+// );
+
 // selectFirstName("Root");
 // selectCity("Manipal");
 const userId = '00000000-0000-0000-0000-000000000001';
