@@ -4,6 +4,7 @@ import Database from "better-sqlite3";
 
 
 const myDbAccess =new MyDatabaseAccess();
+
 // try {
 //     myDbAccess.createTable();
 // } catch (error) {
@@ -37,9 +38,6 @@ function selectCity(city:string){
     }catch (error) {
         console.log(error);
     }
-    /*finally{
-    myDbAccess.close();
-    }*/
 }
 function insertSql(userId: string, email: string, firstName: string, lastName: string, address1: string, city: string, stateProvince: string, country: string, pinCode: string, phoneNumber: string) {
     const sql = `
@@ -161,6 +159,6 @@ const newPhoneNumber = '1212121215';
 
 // updatePhoneNoWithUserID(userId, newPhoneNumber);
 
-UserinsertUpdateSelect("00000000-0000-0000-0000-000000000002", "1234123455");
+// UserinsertUpdateSelect("00000000-0000-0000-0000-000000000002", "1234123455");
 
 // deleteAccount("1234123455");
