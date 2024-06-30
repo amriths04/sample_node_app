@@ -69,3 +69,23 @@ CREATE TABLE IF NOT EXISTS MatchSummary (
     FOREIGN KEY (CreatedBy) REFERENCES User(UserId),
     FOREIGN KEY (LastModifiedBy) REFERENCES User(UserId)
 );
+
+
+CREATE TRIGGER IF NOT EXISTS MATCH_SUMMARY_OPTLOCK_SET_INITIAL_VALUE
+AFTER INSERT ON MatchSummary
+FOR EACH ROW
+BEGIN
+    UPDATE MatchSummary
+    SET OptLockVersion = 1
+    WHERE rowid = NEW.rowid;
+END;
+
+CREATE TRIGGER IF NOT EXISTS MATCH_SUMMARY_OPTLOCK_INCREMENT_VALUE
+AFTER UPDATE ON MatchSummary
+FOR EACH ROW
+WHEN OLD.OptLockVersion = NEW.OptLockVersion
+BEGIN
+    UPDATE MatchSummary
+    SET OptLockVersion = OptLockVersion + 1
+    WHERE rowid = NEW.rowid;
+END;
