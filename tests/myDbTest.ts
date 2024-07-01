@@ -16,8 +16,7 @@ function selectFirstName(firstName: string) {
     try {
         // const sql="Select * from user where firstname='"+firstName+"'"
         const params = [firstName];
-        const sql = "Select * from user where firstname=?"
-        console.log(sql)
+        const sql = "Select * from user where firstname=?";
         const rows = myDbAccess.runSql(sql, params);
         console.log(rows);
     } catch (error) {
@@ -30,8 +29,7 @@ function selectFirstName(firstName: string) {
 function selectCity(city: string) {
     try {
         const params = [city];
-        const sql = "SELECT * FROM USER WHERE city =?"
-        console.log(sql);
+        const sql = "SELECT * FROM USER WHERE city =?";
         const rows = myDbAccess.runSql(sql, params);
         console.log(rows);
     } catch (error) {
@@ -57,10 +55,8 @@ function insertSql(userId: string, email: string, firstName: string, lastName: s
 function deleteAccount(PhoneNumber: string,) {
     try {
         const sql = ` DELETE FROM User  WHERE PhoneNumber = ?;`;
-
-        const params = [PhoneNumber];
+const params = [PhoneNumber];
         const result = myDbAccess.execute(sql, params);
-        // console.log(result);
     } catch (error) {
         console.log(error);
     }
@@ -72,7 +68,6 @@ function updateSql(userId: string, firstName: string, lastName: string) {
     try {
         const sql = "UPDATE User SET FirstName = ?, LastName = ? WHERE UserId = ?";
         const params = [firstName, lastName, userId];
-        console.log(sql);
         const result = myDbAccess.execute(sql, params);
         console.log(result);
     } catch (error) {
@@ -90,9 +85,7 @@ function updatePhoneNo(userId: string, newPhoneNumber: string) {
         const updatePhoneParams = [newPhoneNumber, userId];
         console.log("Executing update:", updatePhoneSql, updatePhoneParams);
         myDbAccess.execute(updatePhoneSql, updatePhoneParams);
-
         myDbAccess.execute("COMMIT");
-
         console.log("Phone number updated successfully.");
     } catch (error) {
         console.log("Error encountered:", error);
@@ -111,9 +104,7 @@ function updatePhoneNoWithUserID(userId: string, newPhoneNumber: string) {
     try {
         const sql = "UPDATE User SET PhoneNumber = ? WHERE UserId = ?";
         const params = [newPhoneNumber, userId];
-
         const result = myDbAccess.execute(sql, params);
-
     } catch (error) {
         console.log("Error encountered:", error);
     }

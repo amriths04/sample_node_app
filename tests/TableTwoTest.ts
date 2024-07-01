@@ -3,23 +3,20 @@ import { MyDatabaseAccess } from "../src/MyDatabaseAccess";
 import Database from "better-sqlite3";
 
 
-
-const myDbAccess =new MyDatabaseAccess();
-
+const myDbAccess = new MyDatabaseAccess();
 
 
-function showAllMatch(MatchStatus:Number) {
+function showAllMatch(MatchStatus: Number) {
     try {
-    const params =[MatchStatus];
-    const sql="Select * from MatchSummary where MatchStatus=?"
-    const rows=myDbAccess.runSql(sql, params);
-    console.log(rows);
+        const params = [MatchStatus];
+        const sql = "Select * from MatchSummary where MatchStatus=?"
+        const rows = myDbAccess.runSql(sql, params);
     } catch (error) {
         console.log(error);
     }
 }
 
-function insertMatchSummary(MatchId:String,Url: string, Title: string, MatchStatus: number, ownerId: string) {
+function insertMatchSummary(MatchId: String, Url: string, Title: string, MatchStatus: number, ownerId: string) {
     try {
         const sql = `
             INSERT INTO MatchSummary (
@@ -30,19 +27,11 @@ function insertMatchSummary(MatchId:String,Url: string, Title: string, MatchStat
                 ?, CURRENT_TIMESTAMP, ?, 1
             );
         `;
-
-        const params = [MatchId,Url, Title, MatchStatus, ownerId, ownerId, ownerId];
-        
-        // console.log(sql);
-        // console.log("Params: ", params);
-        
+        const params = [MatchId, Url, Title, MatchStatus, ownerId, ownerId, ownerId]; 
         const result = myDbAccess.execute(sql, params);
-        // console.log(result);
     } catch (error) {
         console.log(error);
     }
-
-    
 }
 
 
@@ -58,7 +47,6 @@ function MatchStatusJoin(MatchStatus: number): void {
             WHERE ms.MatchStatus = ?
         `;
         const rows = myDbAccess.runSql(sql, params);
-        console.log(rows);
     } catch (error) {
         console.error(error);
     }
