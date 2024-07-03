@@ -25,6 +25,18 @@ function selectFirstName(firstName: string) {
         myDbAccess.close();
     }*/
 }
+function selectAll() {
+    try {
+       
+        const sql = "Select * from user ;"
+        const rows = myDbAccess.runSql(sql,[]);
+        console.log(rows);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
 
 function selectCity(city: string) {
     try {
@@ -219,3 +231,4 @@ const newPhoneNumber = '1212121215';
 // UserinsertUpdateSelect("00000000-0000-0000-0000-000000000002", "1234123455");
 
 // deleteAccount("1234123455");
+selectAll();

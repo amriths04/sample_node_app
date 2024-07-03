@@ -23,7 +23,7 @@ export class MyDatabaseAccess{
         const rows =stmt.all(params)
         return rows;
     }
-    // public execute(sql:string,params?: any) : Database.RunResult{
+    // public execute(sql:string) : Database.RunResult{
     //     const stmt =this.connection.prepare(sql);
     //     const result =stmt.run(params)
     //     return result;
